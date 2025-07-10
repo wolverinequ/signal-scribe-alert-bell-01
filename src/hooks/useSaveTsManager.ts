@@ -3,6 +3,7 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Device } from '@capacitor/device';
 import { processTimestamps } from '@/utils/timestampUtils';
 import { useToast } from '@/hooks/use-toast';
+import SafPlugin from '@/plugins/SafPlugin';
 
 export const useSaveTsManager = () => {
   const [showSaveTsDialog, setShowSaveTsDialog] = useState(false);
@@ -253,8 +254,8 @@ export const useSaveTsManager = () => {
   // Native Android SAF document picker using Capacitor plugin
   const openAndroidDocumentPicker = async (): Promise<{uri: string, name?: string} | null> => {
     try {
-      // Use the SafPlugin to open document picker
-      const result = await (window as any).SafPlugin.openDocumentPicker();
+      // Use the properly registered SafPlugin
+      const result = await SafPlugin.openDocumentPicker();
       console.log('💾 SaveTsManager: SAF document picker result:', result);
       return result;
     } catch (error) {
@@ -266,8 +267,8 @@ export const useSaveTsManager = () => {
   // Write content to SAF URI using Capacitor plugin
   const writeToSafUri = async (uri: string, content: string): Promise<{success: boolean, error?: string}> => {
     try {
-      // Use the SafPlugin to write to SAF URI
-      const result = await (window as any).SafPlugin.writeToSafUri({
+      // Use the properly registered SafPlugin
+      const result = await SafPlugin.writeToSafUri({
         uri: uri,
         content: content
       });
