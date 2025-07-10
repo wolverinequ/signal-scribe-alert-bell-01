@@ -254,12 +254,16 @@ export const useSaveTsManager = () => {
   // Native Android SAF document picker using Capacitor plugin
   const openAndroidDocumentPicker = async (): Promise<{uri: string, name?: string} | null> => {
     try {
+      console.log('💾 SaveTsManager: Attempting to call SafPlugin.openDocumentPicker');
+      console.log('💾 SaveTsManager: SafPlugin object:', SafPlugin);
+      
       // Use the properly registered SafPlugin
       const result = await SafPlugin.openDocumentPicker();
       console.log('💾 SaveTsManager: SAF document picker result:', result);
       return result;
     } catch (error) {
       console.error('💾 SaveTsManager: SAF document picker error:', error);
+      console.error('💾 SaveTsManager: Error details:', error.message, error.stack);
       return null;
     }
   };
